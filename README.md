@@ -1,5 +1,6 @@
-# operation_ranch_rescue
+# Operation Ranch Rescue
 Individual game prototype for CS4483B
+By: Omar Tahir (otahir3)
 
 # How to run
 To run the game, please download the folder 'operation_ranch_rescue', and open it using Unity Hub.
