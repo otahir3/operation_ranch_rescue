@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rigidBody;
     private Animator animator;
     private SpriteRenderer sprite;
-    private BoxCollider2D collider;
+    private CapsuleCollider2D collider;
 
     private float directionX = 0f;
     [SerializeField] private float moveSpeed = 7f;
@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
        rigidBody = GetComponent<Rigidbody2D>();
        animator = GetComponent<Animator>();
        sprite = GetComponent<SpriteRenderer>();
-       collider = GetComponent<BoxCollider2D>();
+       collider = GetComponent<CapsuleCollider2D>();
     }
 
     // Update is called once per frame

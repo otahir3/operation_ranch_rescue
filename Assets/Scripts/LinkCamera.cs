@@ -16,11 +16,55 @@ public class LinkCamera : MonoBehaviour
     [SerializeField] CinemachineVirtualCamera room8Cam;
     [SerializeField] CinemachineVirtualCamera room9Cam;
 
+    // this variable is initalized to 0
+    // to set this variable to a room number, it can be done in player inspector
+    public int playerCurrRoom;
+
     private int prevRoomNum = 1;
+
+    void Start() {
+        // check which room that player is currently at
+        // if the player is not at room 1, shift the main camera from room 1 to the current room
+        // the folowing is the layout and room number
+        // ----------------------------
+        // | Room 7 | Room 8 | Room 9 |
+        // ----------------------------
+        // | Room 6 | Room 5 | Room 4 |
+        // ----------------------------
+        // | Room 1 | Room 2 | Room 3 |
+        // ----------------------------
+        switch (playerCurrRoom) {
+            case 2:
+                switchAndRegisterCam(room2Cam, playerCurrRoom);
+                break;
+            case 3:
+                switchAndRegisterCam(room3Cam, playerCurrRoom);
+                break;
+            case 4:
+                switchAndRegisterCam(room4Cam, playerCurrRoom);
+                break;
+            case 5:
+                switchAndRegisterCam(room5Cam, playerCurrRoom);
+                break;
+            case 6:
+                switchAndRegisterCam(room6Cam, playerCurrRoom);
+                break;
+            case 7:
+                switchAndRegisterCam(room7Cam, playerCurrRoom);
+                break;
+            case 8:
+                switchAndRegisterCam(room8Cam, playerCurrRoom);
+                break;
+            case 9:
+                switchAndRegisterCam(room9Cam, playerCurrRoom);
+                break;
+        }
+
+    }
 
     // When the player stop touching the trigger
     // Use the tag of the trigger and the previous room the player is at to determine where the main camera should move to
-    private void OnTriggerExit2D(Collider2D collision) {
+    private void OnTriggerEnter2D(Collider2D collision) {
 
         // If the player stop touching the trigger between room 1 and 2
         if (collision.gameObject.CompareTag("R1R2Trigger")) {
@@ -35,12 +79,14 @@ public class LinkCamera : MonoBehaviour
 
             // Otherwise meaning the player was previously at room 2
             // main camera will switch to virutal camera at room 1
+            // change the prevRoomNum to the player current room
             else {
                 CameraSwitcher.SwitchCamera(room1Cam);
                 prevRoomNum = 1;
             }
         }
 
+        // similar logic is applied
         else if (collision.gameObject.CompareTag("R2R3Trigger")) {
             if (prevRoomNum == 2) {
                 CameraSwitcher.SwitchCamera(room3Cam);
@@ -117,24 +163,21 @@ public class LinkCamera : MonoBehaviour
                 prevRoomNum = 1;
             }
         }
-
     }
 
+    // register all camera and shift main camera to the room that the player is current at
+    private void switchAndRegisterCam(CinemachineVirtualCamera roomCam, int playerCurrRoom){
+        registerAllCamera();
+        CameraSwitcher.SwitchCamera(roomCam);
+        prevRoomNum = playerCurrRoom;
+    }
 
     // register all virtual camera when player is moving
     private void OnEnable() {
-        CameraSwitcher.Register(room1Cam);
-        CameraSwitcher.Register(room2Cam);
-        CameraSwitcher.Register(room3Cam);
-        CameraSwitcher.Register(room4Cam);
-        CameraSwitcher.Register(room5Cam);
-        CameraSwitcher.Register(room6Cam);
-        CameraSwitcher.Register(room7Cam);
-        CameraSwitcher.Register(room8Cam);
-        CameraSwitcher.Register(room9Cam);
-
+        registerAllCamera();
     }
 
+    // unregister all virtual camera when player stop moving
     private void OnDisable() {
         CameraSwitcher.Unregister(room1Cam);
         CameraSwitcher.Unregister(room2Cam);
@@ -147,4 +190,17 @@ public class LinkCamera : MonoBehaviour
         CameraSwitcher.Unregister(room9Cam);
 
     }
+
+    private void registerAllCamera() {
+        CameraSwitcher.Register(room1Cam);
+        CameraSwitcher.Register(room2Cam);
+        CameraSwitcher.Register(room3Cam);
+        CameraSwitcher.Register(room4Cam);
+        CameraSwitcher.Register(room5Cam);
+        CameraSwitcher.Register(room6Cam);
+        CameraSwitcher.Register(room7Cam);
+        CameraSwitcher.Register(room8Cam);
+        CameraSwitcher.Register(room9Cam);
+    }
+   
 }
