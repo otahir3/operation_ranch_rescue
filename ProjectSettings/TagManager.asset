@@ -5,6 +5,14 @@ TagManager:
   serializedVersion: 2
   tags:
   - Apple
+  - R1R2Trigger
+  - R2R3Trigger
+  - R3R4Trigger
+  - R4R5Trigger
+  - R5R6Trigger
+  - R6R7Trigger
+  - R1R6Trigger
+  - R5R8Trigger
   layers:
   - Default
   - TransparentFX
